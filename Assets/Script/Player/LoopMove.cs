@@ -26,13 +26,14 @@ public class LoopMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && player.GetComponent<PlayerMove>().isRopeing)
         {
-            joint.spring = 8f;
+            joint.spring = 15f;
+            joint.damper = 0.1f;
             joint.minDistance = 0.1f;
         }
 
-        if (player.GetComponent<PlayerMove>().isRopeing && Vector3.Distance(transform.position, player.transform.position) < joint.minDistance)
+        if (player.GetComponent<PlayerMove>().isRopeing && temp < joint.minDistance)
         {
-            joint.minDistance = Vector3.Distance(transform.position, player.transform.position) - 0.1f;
+            joint.minDistance = temp;
         }
 
         /*if (temp > 10)
@@ -71,14 +72,14 @@ public class LoopMove : MonoBehaviour
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = transform.position;
 
-        joint.spring = 5f;
-        joint.damper = 3f;
+        joint.spring = 10f;
+        joint.damper = 1f;
         joint.massScale = 5f;
 
         float dis = Vector3.Distance(player.transform.position, transform.position);
 
         joint.minDistance = dis;
-        joint.maxDistance = dis * 0.5f;
+        joint.maxDistance = dis * 0.6f;
 
         joint.breakForce = 10000000;
         joint.breakTorque = 10000000;

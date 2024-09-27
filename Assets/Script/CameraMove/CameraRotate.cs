@@ -37,7 +37,7 @@ public class CameraRotate : MonoBehaviour
 
         x = ClampAngle(x);
 
-        transform.rotation = Quaternion.Euler(new Vector3(x, y, 0));
+        transform.rotation = Quaternion.Euler(new Vector3(x, transform.eulerAngles.y, 0));
         playerTransform.rotation = Quaternion.Euler(new Vector3(0, y, 0));
     }
 

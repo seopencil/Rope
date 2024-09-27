@@ -18,6 +18,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -39,7 +40,7 @@ public class PlayerMove : MonoBehaviour
 
         if (isGraund && !isRopeing)
         { 
-            rb.AddForce(0, Input.GetAxis("Jump") * jumpP, 0);
+            rb.AddForce(0, Input.GetAxis("Jump") * jumpP * Time.deltaTime, 0);
         }
 
         //if (isRopeing)
