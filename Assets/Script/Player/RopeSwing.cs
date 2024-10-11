@@ -30,14 +30,14 @@ public class RopeSwing : MonoBehaviour
 
     public void Swing()
     {
-        player.GetComponent<PlayerMove>().StartRope();
+        //player.GetComponent<PlayerMove>().StartRope();
 
         joint = player.AddComponent<SpringJoint>();
 
         GameObject temp = new GameObject();
         temp.transform.rotation = transform.rotation;
         temp.transform.position = transform.position;
-        temp.transform.localPosition += transform.TransformDirection(new Vector3(0, 10f, 10f));
+        temp.transform.localPosition += transform.TransformDirection(new Vector3(0, 10f, 30f));
 
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = temp.transform.position;
@@ -51,7 +51,7 @@ public class RopeSwing : MonoBehaviour
         joint.maxDistance = dis * 0.7f;
         joint.massScale = 5f;
 
-        player.GetComponent<Rigidbody>().AddRelativeForce((Vector3.forward + Vector3.down).normalized * 2000);
+        //player.GetComponent<Rigidbody>().AddRelativeForce((Vector3.forward).normalized * 500);
 
         joint.breakForce = 10000000;
         joint.breakTorque = 10000000;

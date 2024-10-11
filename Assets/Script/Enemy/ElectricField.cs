@@ -2,19 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class ElectricField : MonoBehaviour
 {
-    private void Update()
-    {
-        transform.Translate(0, 0, 1500f *  Time.deltaTime);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //hit
-            Debug.Log("악");
+            //전기 지지직
+            Debug.Log("지지직");
         }
     }
 }

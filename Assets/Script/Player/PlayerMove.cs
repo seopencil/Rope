@@ -9,12 +9,19 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     float jumpP;
     [SerializeField]
-    float mexSpeed;
+    float runMaxSpeed;
+    [SerializeField]
+    float graundMexSpeed;
+    [SerializeField]
+    float airMaxSpeed;
+    [SerializeField]
+    float ropeP;
 
     Rigidbody rb;
 
     bool isGraund = false;
     public bool isRopeing = false;
+    float maxSpeed;
 
     private void Awake()
     {
@@ -27,6 +34,8 @@ public class PlayerMove : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        maxSpeed = graundMexSpeed;
     }
 
     // Update is called once per frame
@@ -35,12 +44,44 @@ public class PlayerMove : MonoBehaviour
         float xMove = Input.GetAxis("Horizontal");
         float zMove = Input.GetAxis("Vertical");
 
+        Vector3 dis = new Vector3(xMove, 0, zMove).normalized * moveP * Time.deltaTime;
 
-        rb.AddRelativeForce(new Vector3(xMove, 0, zMove).normalized * moveP * Time.deltaTime);
+        if (isRopeing)
+        {
+            dis *= ropeP;
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift) && isGraund)
+        {
+            maxSpeed = runMaxSpeed;
+        }
+        else
+        {
+            maxSpeed = graundMexSpeed;
+        }
+
+        if (isGraund)
+        {
+            rb.AddForce(-rb.velocity.normalized * 1500 * Time.deltaTime);
+        }
+
+        if (isGraund || isRopeing)
+        {
+            rb.AddRelativeForce(dis);
+        }
 
         if (isGraund && !isRopeing)
         { 
             rb.AddForce(0, Input.GetAxis("Jump") * jumpP * Time.deltaTime, 0);
+        }
+
+        if (rb.velocity.magnitude > maxSpeed && isGraund)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+        if (rb.velocity.magnitude > airMaxSpeed && !isGraund)
+        {
+            rb.velocity = rb.velocity.normalized * airMaxSpeed;
         }
 
         //if (isRopeing)
