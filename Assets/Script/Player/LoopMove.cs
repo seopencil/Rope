@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class LoopMove : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class LoopMove : MonoBehaviour
     float speed;
     [SerializeField]
     GameObject player;
+
     SpringJoint joint;
 
     // Start is called before the first frame update
@@ -29,15 +31,15 @@ public class LoopMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && player.GetComponent<PlayerMove>().isRopeing)
         {
-            joint.spring = 15f;
+            joint.spring = 50f;
             joint.damper = 0.1f;
             joint.minDistance = 0.1f;
         }
 
-        if (player.GetComponent<PlayerMove>().isRopeing && temp < joint.minDistance)
-        {
-            joint.minDistance = temp;
-        }
+        //if (player.GetComponent<PlayerMove>().isRopeing && temp < joint.minDistance)
+        //{
+        //    joint.minDistance = temp;
+        //}
 
         /*if (temp > 10)
         {
@@ -64,21 +66,29 @@ public class LoopMove : MonoBehaviour
         
         joint = player.AddComponent<SpringJoint>();
 
+        float dis = Vector3.Distance(transform.position, player.transform.position);
+
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = transform.position;
 
-        joint.spring = 10f;
-        joint.damper = 1f;
+        joint.spring = 150f;
+        joint.damper = dis;
         joint.massScale = 5f;
 
-        float dis = Vector3.Distance(player.transform.position, transform.position);
+        joint.maxDistance = dis * 0.5f;
 
+        if (Vector3.Distance(transform.position, player.transform.position) > transform.position.y - 25f)
+        {
+            dis = transform.position.y - 25f;
+            joint.maxDistance = dis;
+        }
+        
         joint.minDistance = dis;
-        joint.maxDistance = dis * 0.6f;
+
 
         joint.breakForce = 10000000;
         joint.breakTorque = 10000000;
 
-        joint.minDistance = Vector3.Distance(transform.position, player.transform.position);
+        //joint.minDistance = Vector3.Distance(transform.position, player.transform.position);
     }
 }

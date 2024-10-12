@@ -42,7 +42,7 @@ public class Loop : MonoBehaviour
         loop.transform.position = transform.position;
         loop.transform.rotation = transform.rotation;
 
-        //loop.transform.localPosition = Vector3.forward;
+        loop.transform.localPosition += Vector3.forward;
         loop.transform.SetParent(null);
     }
 
