@@ -63,17 +63,21 @@ public class Enemy : MonoBehaviour
             yield return null;
         }
 
+        bullet.transform.LookAt(player[0].transform.position);
+
         yield return new WaitForSeconds(shootTime);
 
         //ÃÑ ½î±â
         lineRenderer.enabled = false;
-        bullet.transform.LookAt(player[0].transform.position);
         bullet.SetActive(true);
         Debug.Log("»§");
 
-        yield return new WaitForSeconds(reloadingTime);
+        yield return new WaitForSeconds(0.2f);
 
         bullet.SetActive(false);
+
+        yield return new WaitForSeconds(reloadingTime);
+
         bullet.transform.position = transform.position;
         playerInRange = false;
 

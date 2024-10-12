@@ -6,6 +6,8 @@ public class RopeSwing : MonoBehaviour
 {
     GameObject player;
     SpringJoint joint;
+    [SerializeField]
+    Loop loop;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +25,7 @@ public class RopeSwing : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(1) && !Input.GetMouseButton(0))
         {
-            Destroy(joint);
+            loop.CutRope();
             player.GetComponent<PlayerMove>().isRopeing = false;
         }
     }

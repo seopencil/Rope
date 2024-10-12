@@ -7,7 +7,7 @@ public class LoopMove : MonoBehaviour
 {
     [SerializeField]
     float speed;
-
+    [SerializeField]
     GameObject player;
     SpringJoint joint;
 
@@ -20,7 +20,10 @@ public class LoopMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        if (!player.GetComponent<PlayerMove>().isRopeing)
+        {
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
 
         float temp = Vector3.Distance(transform.position, player.transform.position);
 
@@ -42,31 +45,23 @@ public class LoopMove : MonoBehaviour
         }*/
     }
 
-    public void setPlayer(GameObject _player)
-    {
-        player = _player;
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag != "Player")
         {
-            speed = 0;
             player.GetComponent<PlayerMove>().isRopeing = true;
             Hold();
         }
     }
-    private void OnDestroy()
-    {
-        player.GetComponentInChildren<Loop>().DesLoop();
-        player.GetComponent<PlayerMove>().isRopeing = false;
-        Destroy(joint);
-    }
-
     void Hold()
     {
         //player.GetComponent<PlayerMove>().StartRope();
 
+        if (player.GetComponent<SpringJoint>() != null)
+        {
+            return;
+        }
+        
         joint = player.AddComponent<SpringJoint>();
 
         joint.autoConfigureConnectedAnchor = false;

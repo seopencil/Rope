@@ -9,11 +9,13 @@ public class Loop : MonoBehaviour
 
     GameObject _loop;
 
+    GameObject player;
     bool haveLoop = false;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        loop.SetActive(false);
+        player = transform.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -26,20 +28,34 @@ public class Loop : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1))
         {
-            Destroy(_loop);
+            loop.SetActive(false);
+            DesLoop();
+            CutRope();
+            player.GetComponent<PlayerMove>().isRopeing = false;
         }
     }
 
     void ShootLoop()
     {
-        _loop = Instantiate(loop, transform.position, transform.rotation, transform);
+        loop.transform.SetParent(player.transform);
+        loop.SetActive(true);
+        loop.transform.position = transform.position;
+        loop.transform.rotation = transform.rotation;
 
-        _loop.transform.localPosition = Vector3.forward * 1;
-        _loop.transform.SetParent(null);
-        _loop.GetComponent<LoopMove>().setPlayer(transform.parent.gameObject);
+        //loop.transform.localPosition = Vector3.forward;
+        loop.transform.SetParent(null);
     }
 
-    
+    public void CutRope()
+    {
+        SpringJoint joint = player.GetComponent<SpringJoint>();
+        if (joint == null)
+        {
+            return;
+        }
+        loop.SetActive(false);
+        Destroy(joint);
+    }
 
     public void DesLoop()
     {

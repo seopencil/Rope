@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField]
+    Loop loop;
+
+    [SerializeField]
     float moveP;
     [SerializeField]
     float jumpP;
@@ -60,11 +63,6 @@ public class PlayerMove : MonoBehaviour
             maxSpeed = graundMexSpeed;
         }
 
-        if (isGraund)
-        {
-            rb.AddForce(-rb.velocity.normalized * 1500 * Time.deltaTime);
-        }
-
         if (isGraund || isRopeing)
         {
             rb.AddRelativeForce(dis);
@@ -73,6 +71,7 @@ public class PlayerMove : MonoBehaviour
         if (isGraund && !isRopeing)
         { 
             rb.AddForce(0, Input.GetAxis("Jump") * jumpP * Time.deltaTime, 0);
+            rb.AddForce(-rb.velocity.normalized * 1500 * Time.deltaTime);
         }
 
         if (rb.velocity.magnitude > maxSpeed && isGraund)
@@ -93,6 +92,13 @@ public class PlayerMove : MonoBehaviour
     public void StartRope()
     {
         rb.velocity /= 2;
+    }
+
+    public void PlayerKnockBack(Vector3 criteria, float pawer)
+    {
+        Vector3 dis = new Vector3(transform.position.x - criteria.x, transform.position.y - criteria.y, transform.position.z - criteria.z);
+        rb.AddForce(dis.normalized * pawer);
+        loop.CutRope();
     }
 
     private void OnCollisionEnter(Collision collision)

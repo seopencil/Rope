@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField]
+    LayerMask layer;
+    [SerializeField]
+    float pawer;
+
+    RaycastHit hit;
     private void Update()
     {
-        transform.Translate(0, 0, 1500f *  Time.deltaTime);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 80f, layer))
         {
-            //hit
-            Debug.Log("¾Ç");
+            hit.transform.GetComponent<PlayerMove>().PlayerKnockBack(transform.position, pawer);
+            gameObject.SetActive(false);
         }
+        Debug.DrawRay(transform.position, transform.forward * 80f, Color.blue, 0.3f);
     }
 }

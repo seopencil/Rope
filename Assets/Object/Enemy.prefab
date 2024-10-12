@@ -118,6 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9419804aaedfca246ac0b249fa6d4b15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &7731905331989705424
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +248,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   aimingTime: 2.8
-  shootTime: 0.2
+  shootTime: 0.5
   reloadingTime: 2
 --- !u!120 &6161949352307561359
 LineRenderer:
@@ -268,7 +271,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ce72c81e1493d934dad81d00b0c0322b, type: 2}
+  - {fileID: 2100000, guid: 3f056ab0b2c8c8b4aa71336581700231, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
