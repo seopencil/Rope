@@ -15,6 +15,10 @@ public class LoopMove : MonoBehaviour
     [SerializeField]
     float swingMaxDistance;
     [SerializeField]
+    float ropeMagnification;
+    [SerializeField]
+    float springStrength = 10f;
+    [SerializeField]
     GameObject player;
 
 
@@ -73,27 +77,20 @@ public class LoopMove : MonoBehaviour
         
         joint = player.AddComponent<SpringJoint>();
 
-        float dis = Vector3.Distance(transform.position, player.transform.position);
+        float dis = Mathf.Clamp(Vector3.Distance(transform.position, player.transform.position), swingMinDistance, swingMaxDistance);
 
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = transform.position;
 
-        joint.spring = 10f;
+        joint.spring = springStrength;
         joint.massScale = 5f;
 
         joint.maxDistance = 10;
 
-        if (dis < swingMinDistance)
-        {
-            dis = swingMinDistance;
-        }
-        if (dis > swingMaxDistance)
-        {
-            dis = swingMaxDistance;
-        }
+        
 
-        joint.minDistance = dis;
-        joint.damper = dis;
+        joint.minDistance = dis * ropeMagnification;
+        joint.damper = dis * ropeMagnification;
 
 
         joint.breakForce = 10000000;
