@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
         {
             player = Physics.OverlapSphere(transform.position, range, layer);
         }
-        if (player != null && !playerInRange)
+        if (player.Length > 0 && !playerInRange)
         {
             LookOtPlayer();
         }

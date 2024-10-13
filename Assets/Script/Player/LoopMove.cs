@@ -79,18 +79,21 @@ public class LoopMove : MonoBehaviour
         joint.connectedAnchor = transform.position;
 
         joint.spring = 10f;
-        joint.damper = dis;
         joint.massScale = 5f;
 
         joint.maxDistance = 10;
 
-        if (Vector3.Distance(transform.position, player.transform.position) > transform.position.y - 25f)
+        if (dis < swingMinDistance)
         {
-            dis = transform.position.y - 25f;
-            joint.damper = dis;
+            dis = swingMinDistance;
+        }
+        if (dis > swingMaxDistance)
+        {
+            dis = swingMaxDistance;
         }
 
         joint.minDistance = dis;
+        joint.damper = dis;
 
 
         joint.breakForce = 10000000;
