@@ -55,7 +55,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 1.23}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3413502847845189207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,9 +69,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 150
-  ropeMaxDistance: 0
-  swingMinDistance: 0
-  swingMaxDistance: 0
   player: {fileID: 6642934490590313149}
 --- !u!54 &7523559502259300635
 Rigidbody:
