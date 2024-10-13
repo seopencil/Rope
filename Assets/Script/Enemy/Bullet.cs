@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
     RaycastHit hit;
     private void Update()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 80f, layer))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, transform.GetComponentInParent<Enemy>().Range, layer))
         {
             hit.transform.GetComponent<PlayerMove>().PlayerKnockBack(transform.position, pawer);
             gameObject.SetActive(false);

@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float reloadingTime;
 
+    public float Range => range;
+
     bool playerInRange = false;
     GameObject bullet;
     LineRenderer lineRenderer;
@@ -37,7 +39,7 @@ public class Enemy : MonoBehaviour
         {
             player = Physics.OverlapSphere(transform.position, range, layer);
         }
-        if (player[0] != null && !playerInRange)
+        if (player != null && !playerInRange)
         {
             LookOtPlayer();
         }

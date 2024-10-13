@@ -9,7 +9,14 @@ public class LoopMove : MonoBehaviour
     [SerializeField]
     float speed;
     [SerializeField]
+    float ropeMaxDistance;
+    [SerializeField]
+    float swingMinDistance;
+    [SerializeField]
+    float swingMaxDistance;
+    [SerializeField]
     GameObject player;
+
 
     SpringJoint joint;
 
@@ -22,12 +29,12 @@ public class LoopMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float temp = Vector3.Distance(transform.position, player.transform.position);
+
         if (!player.GetComponent<PlayerMove>().isRopeing)
         {
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-
-        float temp = Vector3.Distance(transform.position, player.transform.position);
 
         if (Input.GetKeyDown(KeyCode.Space) && player.GetComponent<PlayerMove>().isRopeing)
         {
@@ -41,10 +48,10 @@ public class LoopMove : MonoBehaviour
         //    joint.minDistance = temp;
         //}
 
-        /*if (temp > 10)
+        if (temp > ropeMaxDistance && !player.GetComponent<PlayerMove>().isRopeing)
         {
-            Destroy(this.gameObject);
-        }*/
+            this.gameObject.SetActive(false);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -71,18 +78,18 @@ public class LoopMove : MonoBehaviour
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = transform.position;
 
-        joint.spring = 150f;
+        joint.spring = 10f;
         joint.damper = dis;
         joint.massScale = 5f;
 
-        joint.maxDistance = dis * 0.5f;
+        joint.maxDistance = 10;
 
         if (Vector3.Distance(transform.position, player.transform.position) > transform.position.y - 25f)
         {
             dis = transform.position.y - 25f;
-            joint.maxDistance = dis;
+            joint.damper = dis;
         }
-        
+
         joint.minDistance = dis;
 
 
